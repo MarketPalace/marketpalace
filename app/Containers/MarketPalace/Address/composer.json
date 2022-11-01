@@ -1,0 +1,6 @@
+{
+    "name": "apiato/address",
+    "description": "Address Container for apiato.",
+    "require": {
+    }
+}
