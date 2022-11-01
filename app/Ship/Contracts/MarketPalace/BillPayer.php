@@ -12,7 +12,7 @@ declare(strict_types=1);
  *
  */
 
-namespace App\Ship\Contracts;
+namespace App\Ship\Contracts\MarketPalace;
 
 /**
  * A customer (either an organization or an individual person) that receives an Invoice.

@@ -12,7 +12,7 @@ declare(strict_types=1);
  *
  */
 
-namespace App\Ship\Contracts;
+namespace App\Ship\Contracts\MarketPalace;
 
 interface Organization extends Contactable
 {
