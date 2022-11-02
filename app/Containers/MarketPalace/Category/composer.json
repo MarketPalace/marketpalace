@@ -1,0 +1,7 @@
+{
+    "name": "apiato/category",
+    "description": "Category Container for apiato.",
+    "require": {
+        "cviebrock/eloquent-sluggable": "^9.0"
+    }
+}
