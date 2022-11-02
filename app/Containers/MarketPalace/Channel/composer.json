@@ -1,0 +1,7 @@
+{
+    "name": "apiato/channel",
+    "description": "Channel Container for apiato.",
+    "require": {
+        "cviebrock/eloquent-sluggable": "^9.0"
+    }
+}
