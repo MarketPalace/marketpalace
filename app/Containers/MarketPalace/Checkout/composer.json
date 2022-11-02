@@ -1,0 +1,6 @@
+{
+    "name": "apiato/checkout",
+    "description": "Checkout Container for apiato.",
+    "require": {
+    }
+}
