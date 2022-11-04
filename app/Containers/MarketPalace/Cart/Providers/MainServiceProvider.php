@@ -2,7 +2,9 @@
 
 namespace App\Containers\MarketPalace\Cart\Providers;
 
+use App\Containers\MarketPalace\Cart\Enums\CartState;
 use App\Containers\MarketPalace\Cart\Facades\Cart;
+use App\Containers\MarketPalace\Cart\Models\CartItem;
 use App\Ship\Parents\Providers\MainServiceProvider as ParentMainServiceProvider;
 use App\Containers\MarketPalace\Cart\CartManager;
 use App\Containers\MarketPalace\Cart\Contracts\CartManager as CartManagerContract;
@@ -12,6 +14,15 @@ use App\Containers\MarketPalace\Cart\Contracts\CartManager as CartManagerContrac
  */
 class MainServiceProvider extends ParentMainServiceProvider
 {
+    protected array $models = [
+        Cart::class,
+        CartItem::class
+    ];
+
+    protected array $enums = [
+        CartState::class
+    ];
+
     /**
      * Container Service Providers.
      */

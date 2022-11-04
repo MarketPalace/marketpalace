@@ -14,14 +14,15 @@ declare(strict_types=1);
 
 namespace App\Containers\MarketPalace\Cart;
 
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use App\Containers\MarketPalace\Cart\Contracts\Cart as CartContract;
 use App\Containers\MarketPalace\Cart\Contracts\CartItem;
 use App\Containers\MarketPalace\Cart\Contracts\CartManager as CartManagerContract;
 use App\Containers\MarketPalace\Cart\Exceptions\InvalidCartConfigurationException;
 use App\Containers\MarketPalace\Cart\Models\Cart;
+use App\Containers\MarketPalace\Cart\Models\CartProxy;
 use App\Ship\Contracts\MarketPalace\Buyable;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class CartManager implements CartManagerContract
 {
@@ -31,7 +32,7 @@ class CartManager implements CartManagerContract
     protected $sessionKey;
 
     /** @var  Cart  The Cart model instance */
-    protected $cart;
+    protected ?Cart $cart;
 
     public function __construct()
     {
@@ -59,19 +60,30 @@ class CartManager implements CartManagerContract
     /**
      * @inheritDoc
      */
-    public function getItems(): Collection
+    public function model()
     {
-        return $this->exists() ? $this->model()->getItems() : collect();
+        $id = $this->getCartId();
+
+        if ($id && $this->cart) {
+            return $this->cart;
+        } elseif ($id) {
+            $this->cart = CartProxy::find($id);
+
+            return $this->cart;
+        }
+
+        return null;
     }
 
     /**
-     * @inheritDoc
+     * Returns the model id of the cart for the current session
+     * or null if it does not exist
+     *
+     * @return int|null
      */
-    public function addItem(Buyable $product, $qty = 1, $params = []): CartItem
+    protected function getCartId()
     {
-        $cart = $this->findOrCreateCart();
-
-        return $cart->addItem($product, $qty, $params);
+        return session($this->sessionKey);
     }
 
     /**
@@ -92,24 +104,6 @@ class CartManager implements CartManagerContract
         if ($cart = $this->model()) {
             $cart->removeProduct($product);
         }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function clear()
-    {
-        if ($cart = $this->model()) {
-            $cart->clear();
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function itemCount()
-    {
-        return $this->exists() ? $this->model()->itemCount() : 0;
     }
 
     /**
@@ -139,19 +133,9 @@ class CartManager implements CartManagerContract
     /**
      * @inheritDoc
      */
-    public function model()
+    public function isNotEmpty()
     {
-        $id = $this->getCartId();
-
-        if ($id && $this->cart) {
-            return $this->cart;
-        } elseif ($id) {
-            $this->cart = Cart::find($id);
-
-            return $this->cart;
-        }
-
-        return null;
+        return !$this->isEmpty();
     }
 
     /**
@@ -165,9 +149,9 @@ class CartManager implements CartManagerContract
     /**
      * @inheritDoc
      */
-    public function isNotEmpty()
+    public function itemCount()
     {
-        return !$this->isEmpty();
+        return $this->exists() ? $this->model()->itemCount() : 0;
     }
 
     /**
@@ -178,6 +162,25 @@ class CartManager implements CartManagerContract
         $this->clear();
         $this->model()->delete();
         $this->forget();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function clear()
+    {
+        if ($cart = $this->model()) {
+            $cart->clear();
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function forget()
+    {
+        $this->cart = null;
+        session()->forget($this->sessionKey);
     }
 
     /**
@@ -193,11 +196,42 @@ class CartManager implements CartManagerContract
     }
 
     /**
+     * Creates a new cart model and saves it's id in the session
+     */
+    protected function createCart()
+    {
+        if (config('marketPalace.cart.auto_assign_user') && Auth::check()) {
+            $attributes = [
+                'user_id' => Auth::user()->id
+            ];
+        }
+
+        return $this->setCartModel(CartProxy::create($attributes ?? []));
+    }
+
+    protected function setCartModel(CartContract $cart): CartContract
+    {
+        $this->cart = $cart;
+
+        session([$this->sessionKey => $this->cart->id]);
+
+        return $this->cart;
+    }
+
+    /**
      * @inheritDoc
      */
     public function getUser()
     {
         return $this->exists() ? $this->model()->getUser() : null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function removeUser()
+    {
+        $this->setUser(null);
     }
 
     /**
@@ -212,17 +246,9 @@ class CartManager implements CartManagerContract
         }
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function removeUser()
-    {
-        $this->setUser(null);
-    }
-
     public function restoreLastActiveCart($user)
     {
-        $lastActiveCart = Cart::ofUser($user)->actives()->latest()->first();
+        $lastActiveCart = CartProxy::ofUser($user)->actives()->latest()->first();
 
         if ($lastActiveCart) {
             $this->setCartModel($lastActiveCart);
@@ -232,7 +258,7 @@ class CartManager implements CartManagerContract
     public function mergeLastActiveCartWithSessionCart($user)
     {
         /** @var Cart $lastActiveCart */
-        if ($lastActiveCart = Cart::ofUser($user)->actives()->latest()->first()) {
+        if ($lastActiveCart = CartProxy::ofUser($user)->actives()->latest()->first()) {
             /** @var CartItem $item */
             foreach ($lastActiveCart->getItems() as $item) {
                 $this->addItem($item->getBuyable(), $item->getQuantity());
@@ -245,21 +271,19 @@ class CartManager implements CartManagerContract
     /**
      * @inheritDoc
      */
-    public function forget()
+    public function getItems(): Collection
     {
-        $this->cart = null;
-        session()->forget($this->sessionKey);
+        return $this->exists() ? $this->model()->getItems() : collect();
     }
 
     /**
-     * Returns the model id of the cart for the current session
-     * or null if it does not exist
-     *
-     * @return int|null
+     * @inheritDoc
      */
-    protected function getCartId()
+    public function addItem(Buyable $product, $qty = 1, $params = []): CartItem
     {
-        return session($this->sessionKey);
+        $cart = $this->findOrCreateCart();
+
+        return $cart->addItem($product, $qty, $params);
     }
 
     /**
@@ -270,28 +294,5 @@ class CartManager implements CartManagerContract
     protected function findOrCreateCart()
     {
         return $this->model() ?: $this->createCart();
-    }
-
-    /**
-     * Creates a new cart model and saves it's id in the session
-     */
-    protected function createCart()
-    {
-        if (config('marketPalace.cart.auto_assign_user') && Auth::check()) {
-            $attributes = [
-                'user_id' => Auth::user()->id
-            ];
-        }
-
-        return $this->setCartModel(Cart::create($attributes ?? []));
-    }
-
-    protected function setCartModel(CartContract $cart): CartContract
-    {
-        $this->cart = $cart;
-
-        session([$this->sessionKey => $this->cart->id]);
-
-        return $this->cart;
     }
 }
