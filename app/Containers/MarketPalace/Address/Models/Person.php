@@ -55,8 +55,8 @@ class Person extends Model implements PersonContract
     ];
 
     protected $enums = [
-        'gender'    => Gender::class,
-        'nameorder' => NameOrder::class
+        'gender'    => 'GenderProxy@enumClass',
+        'nameorder' => 'NameOrderProxy@enumClass'
     ];
 
     /**

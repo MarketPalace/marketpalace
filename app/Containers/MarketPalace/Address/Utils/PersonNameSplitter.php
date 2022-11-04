@@ -10,6 +10,7 @@
 
 namespace App\Containers\MarketPalace\Address\Utils;
 
+use App\Containers\MarketPalace\Address\Enums\NameOrderProxy;
 use Illuminate\Support\Arr;
 use App\Containers\MarketPalace\Address\Contracts\NameOrder;
 
@@ -32,7 +33,7 @@ class PersonNameSplitter
     {
         $name      = trim($name);
         $parts     = explode(' ', $name);
-        $nameOrder = $nameOrder ?: NameOrder::create(); // create default if none was given
+        $nameOrder = $nameOrder ?: NameOrderProxy::create(); // create default if none was given
 
         switch (count($parts)) {
             case 1:

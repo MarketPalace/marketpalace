@@ -3,6 +3,7 @@
  * Contains the Address model class.
  *
  * @copyright   Copyright (c) 2016 Aboozar Ghaffari
+ * @package     MarketPalace
  * @author      Aboozar Ghaffari
  * @license     MIT
  *
@@ -11,8 +12,6 @@
 namespace App\Containers\MarketPalace\Address\Models;
 
 use App\Containers\MarketPalace\Address\Contracts\Address as AddressContract;
-use App\Containers\MarketPalace\Address\Models\Province;
-use App\Containers\MarketPalace\Address\Models\Country;
 use App\Containers\MarketPalace\Address\Enums\AddressType;
 use App\Ship\Parents\Models\Model as ParentModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -63,11 +62,11 @@ class Address extends ParentModel implements AddressContract
 
     public function country(): BelongsTo
     {
-        return $this->belongsTo(Country::class, 'country_id');
+        return $this->belongsTo(CountryProxy::modelClass(), 'country_id');
     }
 
     public function province(): BelongsTo
     {
-        return $this->belongsTo(Province::class, 'province_id');
+        return $this->belongsTo(ProvinceProxy::modelClass(), 'province_id');
     }
 }

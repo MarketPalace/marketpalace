@@ -1,6 +1,6 @@
 <?php
 
-use App\Containers\MarketPalace\Address\Enums\AddressType;
+use App\Containers\MarketPalace\Address\Enums\AddressTypeProxy;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +13,7 @@ return new class extends Migration {
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('type', AddressType::values())->nullable()->default(AddressType::defaultValue());
+            $table->enum('type', AddressTypeProxy::values())->nullable()->default(AddressTypeProxy::defaultValue());
             $table->string('name');
             $table->char('country_id', 2);
             $table->integer('province_id')->unsigned()->nullable();

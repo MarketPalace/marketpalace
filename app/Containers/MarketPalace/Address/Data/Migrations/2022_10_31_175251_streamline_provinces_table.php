@@ -1,6 +1,6 @@
 <?php
 
-use App\Containers\MarketPalace\Address\Enums\ProvinceType;
+use App\Containers\MarketPalace\Address\Enums\ProvinceTypeProxy;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -29,7 +29,7 @@ return new class extends Migration {
         /** based on ISO 3166-2 https://en.wikipedia.org/wiki/ISO_3166-2 */
         Schema::table('provinces', function (Blueprint $table) {
             // Get rid of enum field, they're fkcn painful with Laravel
-            $table->string('type', 16)->default(ProvinceType::defaultValue())->change();
+            $table->string('type', 16)->default(ProvinceTypeProxy::defaultValue())->change();
         });
 
         Schema::table('provinces', function (Blueprint $table) {

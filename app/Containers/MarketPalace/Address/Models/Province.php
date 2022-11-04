@@ -42,14 +42,14 @@ class Province extends Model implements ProvinceContract
     protected $guarded = ['id'];
 
     protected $enums = [
-        'type' => ProvinceType::class
+        'type' => 'ProvinceTypeProxy@enumClass'
     ];
 
     public static function findByCountryAndCode($country, string $code): ?ProvinceContract
     {
         $country = is_object($country) ? $country->id : $country;
 
-        return Province::byCountry($country)
+        return ProvinceProxy::byCountry($country)
             ->where('code', $code)
             ->take(1)
             ->get()
@@ -58,7 +58,7 @@ class Province extends Model implements ProvinceContract
 
     public function country(): BelongsTo
     {
-        return $this->belongsTo(Country::class, 'country_id');
+        return $this->belongsTo(CountryProxy::modelClass(), 'country_id');
     }
 
     public function removeParent(): void
@@ -68,7 +68,7 @@ class Province extends Model implements ProvinceContract
 
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(Province::class, 'parent_id');
+        return $this->belongsTo(ProvinceProxy::modelClass(), 'parent_id');
     }
 
     public function setParent(ProvinceContract $province): void
@@ -83,7 +83,7 @@ class Province extends Model implements ProvinceContract
 
     public function children(): HasMany
     {
-        return $this->hasMany(Province::class, 'parent_id');
+        return $this->hasMany(ProvinceProxy::modelClass(), 'parent_id');
     }
 
     public function scopeByCountry($query, $country)

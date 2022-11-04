@@ -3,6 +3,7 @@
  * Contains the Country model class
  *
  * @copyright   Copyright (c) 2016 Aboozar Ghaffari
+ * @package     MarketPalace
  * @author      Aboozar Ghaffari
  * @license     MIT
  *
@@ -57,7 +58,7 @@ class Country extends Model implements CountryContract
 
     public function provinces(): HasMany
     {
-        return $this->hasMany(Province::class, 'country_id', 'id');
+        return $this->hasMany(ProvinceProxy::modelClass(), 'country_id', 'id');
     }
 
     public function states()

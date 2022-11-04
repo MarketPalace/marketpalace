@@ -1,7 +1,7 @@
 <?php
 
-use App\Containers\MarketPalace\Address\Enums\Gender;
-use App\Containers\MarketPalace\Address\Enums\NameOrder;
+use App\Containers\MarketPalace\Address\Enums\GenderProxy;
+use App\Containers\MarketPalace\Address\Enums\NameOrderProxy;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,11 +19,11 @@ return new class extends Migration {
             $table->string('email')->nullable();
             $table->string('phone', 22)->nullable();
             $table->date('birthdate')->nullable();
-            $table->enum('gender', Gender::values())->nullable();
+            $table->enum('gender', GenderProxy::values())->nullable();
             $table->string('nin', 21)->nullable()->comment('National Identification Number');
 
-            $table->enum('nameorder', NameOrder::values())
-                ->default(NameOrder::defaultValue())
+            $table->enum('nameorder', NameOrderProxy::values())
+                ->default(NameOrderProxy::defaultValue())
                 ->comment('western: First Last, eastern: Last First');
 
             $table->timestamps();
