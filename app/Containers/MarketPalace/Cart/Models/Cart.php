@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace App\Containers\MarketPalace\Cart\Models;
 
+use App\Containers\MarketPalace\Cart\Contracts\Cart as CartContract;
 use App\Containers\MarketPalace\Cart\Enums\CartStateProxy;
 use App\Containers\MarketPalace\Cart\Exceptions\InvalidCartConfigurationException;
 use App\Ship\Contracts\MarketPalace\Buyable;
@@ -22,7 +23,7 @@ use App\Ship\Utils\CastsEnums;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
 
-class Cart extends ParentModel
+class Cart extends ParentModel implements CartContract
 {
     use CastsEnums;
 
