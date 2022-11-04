@@ -1,0 +1,13 @@
+{
+    "name": "apiato/link",
+    "description": "Link Container for apiato.",
+    "require": {
+        "php": "^8.1",
+        "cviebrock/eloquent-sluggable": "^9.0"
+    },
+    "autoload": {
+        "files": [
+            "Support/helpers.php"
+        ]
+    }
+}
