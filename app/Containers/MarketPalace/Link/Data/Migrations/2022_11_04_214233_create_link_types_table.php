@@ -10,11 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('links', function (Blueprint $table) {
+        Schema::create('link_types', function (Blueprint $table) {
             $table->id();
 
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
-            //$table->softDeletes();
         });
     }
 
@@ -23,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('links');
+        Schema::dropIfExists('link_types');
     }
 };
