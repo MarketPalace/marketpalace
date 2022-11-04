@@ -1,0 +1,8 @@
+{
+    "name": "apiato/product",
+    "description": "Product Container for apiato.",
+    "require": {
+        "php": "^8.1",
+        "cviebrock/eloquent-sluggable": "^9.0"
+    }
+}
