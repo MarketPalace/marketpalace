@@ -2,6 +2,7 @@
 
 namespace App\Containers\MarketPalace\Channel\Providers;
 
+use App\Containers\MarketPalace\Channel\Models\Channel;
 use App\Ship\Parents\Providers\MainServiceProvider as ParentMainServiceProvider;
 
 /**
@@ -9,6 +10,10 @@ use App\Ship\Parents\Providers\MainServiceProvider as ParentMainServiceProvider;
  */
 class MainServiceProvider extends ParentMainServiceProvider
 {
+    protected array $models = [
+        Channel::class
+    ];
+
     /**
      * Container Service Providers.
      */
