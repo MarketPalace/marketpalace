@@ -3,6 +3,7 @@
 namespace App\Ship\Providers;
 
 use App\Ship\Parents\Providers\MainServiceProvider as ParentMainServiceProvider;
+use App\Ship\Utils\Proxifier;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 
 class ShipProvider extends ParentMainServiceProvider
@@ -32,6 +33,10 @@ class ShipProvider extends ParentMainServiceProvider
      */
     public function register(): void
     {
+        $this->app->singleton(Proxifier::class, function ($app) {
+            return new Proxifier($app);
+        });
+
         /**
          * Load the ide-helper service provider only in non production environments.
          */
