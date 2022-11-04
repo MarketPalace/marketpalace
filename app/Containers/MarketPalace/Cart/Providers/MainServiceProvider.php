@@ -3,7 +3,8 @@
 namespace App\Containers\MarketPalace\Cart\Providers;
 
 use App\Containers\MarketPalace\Cart\Enums\CartState;
-use App\Containers\MarketPalace\Cart\Facades\Cart;
+use App\Containers\MarketPalace\Cart\Models\Cart;
+use App\Containers\MarketPalace\Cart\Facades\Cart as CartFacades;
 use App\Containers\MarketPalace\Cart\Models\CartItem;
 use App\Ship\Parents\Providers\MainServiceProvider as ParentMainServiceProvider;
 use App\Containers\MarketPalace\Cart\CartManager;
@@ -34,7 +35,7 @@ class MainServiceProvider extends ParentMainServiceProvider
      * Container Aliases
      */
     public array $aliases = [
-        'Cart' => Cart::class,
+        'Cart' => CartFacades::class,
     ];
 
     /**
