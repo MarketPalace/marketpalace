@@ -1,0 +1,6 @@
+{
+    "name": "apiato/customer",
+    "description": "Customer Container for apiato.",
+    "require": {
+    }
+}
