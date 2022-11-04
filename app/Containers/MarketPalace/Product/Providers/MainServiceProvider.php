@@ -10,7 +10,7 @@ use App\Ship\Parents\Providers\MainServiceProvider as ParentMainServiceProvider;
  * The Main Service Provider of this container, it will be automatically registered in the framework.
  */
 class MainServiceProvider extends ParentMainServiceProvider
-{``
+{
     protected array $models = [
         Product::class
     ];
