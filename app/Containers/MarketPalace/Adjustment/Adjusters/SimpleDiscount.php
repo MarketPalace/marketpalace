@@ -6,6 +6,7 @@ declare(strict_types=1);
  * Contains the SimpleDiscount class.
  *
  * @copyright   Copyright (c) 2022 Aboozar Ghaffari
+ * @package     MarketPalace
  * @author      Aboozar Ghaffari
  * @license     MIT
  */
@@ -16,7 +17,7 @@ use App\Containers\MarketPalace\Adjustment\Contracts\Adjustable;
 use App\Containers\MarketPalace\Adjustment\Contracts\Adjuster;
 use App\Containers\MarketPalace\Adjustment\Contracts\Adjustment;
 use App\Containers\MarketPalace\Adjustment\Models\AdjustmentProxy;
-use App\Containers\MarketPalace\Adjustment\Models\AdjustmentTypeProxy;
+use App\Containers\MarketPalace\Adjustment\Enums\AdjustmentTypeProxy;
 use App\Containers\MarketPalace\Adjustment\Support\HasWriteableTitleAndDescription;
 use App\Containers\MarketPalace\Adjustment\Support\IsLockable;
 use App\Containers\MarketPalace\Adjustment\Support\IsNotIncluded;

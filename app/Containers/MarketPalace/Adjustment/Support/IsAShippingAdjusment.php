@@ -12,7 +12,8 @@ declare(strict_types=1);
 
 namespace App\Containers\MarketPalace\Adjustment\Support;
 
-use App\Containers\MarketPalace\Adjustment\Enums\AdjustmentType;
+use App\Containers\MarketPalace\Adjustment\Contracts\AdjustmentType;
+use App\Containers\MarketPalace\Adjustment\Enums\AdjustmentTypeProxy;
 
 trait IsAShippingAdjusment
 {
@@ -21,7 +22,7 @@ trait IsAShippingAdjusment
     public function getType(): AdjustmentType
     {
         if (null === $this->type) {
-            $this->type = AdjustmentType::SHIPPING();
+            $this->type = AdjustmentTypeProxy::SHIPPING();
         }
 
         return $this->type;

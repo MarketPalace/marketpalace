@@ -2,6 +2,8 @@
 
 namespace App\Containers\MarketPalace\Adjustment\Providers;
 
+use App\Containers\MarketPalace\Adjustment\Enums\AdjustmentType;
+use App\Containers\MarketPalace\Adjustment\Models\Adjustment;
 use App\Ship\Parents\Providers\MainServiceProvider as ParentMainServiceProvider;
 
 /**
@@ -9,6 +11,14 @@ use App\Ship\Parents\Providers\MainServiceProvider as ParentMainServiceProvider;
  */
 class MainServiceProvider extends ParentMainServiceProvider
 {
+    protected array $models = [
+        Adjustment::class
+    ];
+
+    protected array $enums = [
+        AdjustmentType::class
+    ];
+
     /**
      * Container Service Providers.
      */
