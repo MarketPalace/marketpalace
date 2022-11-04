@@ -2,12 +2,13 @@
 
 namespace App\Containers\MarketPalace\Checkout\Providers;
 
-use Illuminate\Support\Str;
-use App\Ship\Parents\Providers\MainServiceProvider as ParentMainServiceProvider;
 use App\Containers\MarketPalace\Checkout\CheckoutManager;
 use App\Containers\MarketPalace\Checkout\Contracts\Checkout as CheckoutContract;
 use App\Containers\MarketPalace\Checkout\Contracts\CheckoutDataFactory;
 use App\Containers\MarketPalace\Checkout\Contracts\CheckoutStore;
+use App\Containers\MarketPalace\Checkout\Enums\CheckoutState;
+use App\Ship\Parents\Providers\MainServiceProvider as ParentMainServiceProvider;
+use Illuminate\Support\Str;
 
 /**
  * The Main Service Provider of this container, it will be automatically registered in the framework.
@@ -20,12 +21,15 @@ class MainServiceProvider extends ParentMainServiceProvider
     public array $serviceProviders = [
         // InternalServiceProviderExample::class,
     ];
-
     /**
      * Container Aliases
      */
     public array $aliases = [
         // 'Foo' => Bar::class,
+    ];
+
+    protected array $enums = [
+        CheckoutState::class
     ];
 
     /**
