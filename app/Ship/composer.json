@@ -4,7 +4,8 @@
     "require": {
         "apiato/core": "^7.0.0",
         "apiato/documentation-generator-container": "^2.7.0",
-        "apiato/welcome-container": "^2.0.1"
+        "apiato/welcome-container": "^2.0.1",
+        "hidehalo/nanoid-php": "^1.1"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
