@@ -16,6 +16,7 @@ use App\Containers\MarketPalace\Address\Models\Province;
 use App\Containers\MarketPalace\Address\Data\Seeders\Countries;
 use App\Containers\MarketPalace\Address\Data\Seeders\ProvincesOfNetherlands;
 use App\Containers\MarketPalace\Address\Tests\TestCase;
+use Illuminate\Foundation\Application;
 
 class NetherlandsTest extends TestCase
 {
@@ -59,9 +60,9 @@ class NetherlandsTest extends TestCase
         $this->assertContains('Zuid-Holland', $names);
     }
 
-    protected function setUpDatabase($application)
+    protected function setUpDatabase(Application $app)
     {
-        parent::setUpDatabase($application);
+        parent::setUpDatabase($app);
 
         $this->artisan('db:seed', ['--class' => Countries::class]);
         $this->artisan('db:seed', ['--class' => ProvincesOfNetherlands::class]);

@@ -17,6 +17,7 @@ use App\Containers\MarketPalace\Address\Enums\ProvinceType;
 use App\Containers\MarketPalace\Address\Data\Seeders\Countries;
 use App\Containers\MarketPalace\Address\Data\Seeders\StatesAndTerritoriesOfIndia;
 use App\Containers\MarketPalace\Address\Tests\TestCase;
+use Illuminate\Foundation\Application;
 
 class IndiaTest extends TestCase
 {
@@ -97,9 +98,9 @@ class IndiaTest extends TestCase
         $this->assertContains('Puducherry', $names);
     }
 
-    protected function setUpDatabase($application)
+    protected function setUpDatabase(Application $app)
     {
-        parent::setUpDatabase($application);
+        parent::setUpDatabase($app);
 
         $this->artisan('db:seed', ['--class' => Countries::class]);
         $this->artisan('db:seed', ['--class' => StatesAndTerritoriesOfIndia::class]);

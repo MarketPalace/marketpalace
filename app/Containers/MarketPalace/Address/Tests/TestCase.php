@@ -4,6 +4,7 @@ namespace App\Containers\MarketPalace\Address\Tests;
 
 use App\Ship\Parents\Tests\PhpUnit\TestCase as ShipTestCase;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 abstract class TestCase extends ShipTestCase
@@ -20,9 +21,9 @@ abstract class TestCase extends ShipTestCase
     /**
      * Set up the environment.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      */
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp(Application $app)
     {
         $app['path.lang'] = __DIR__.'/lang';
 
@@ -47,9 +48,9 @@ abstract class TestCase extends ShipTestCase
     /**
      * Set up the database.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      */
-    protected function setUpDatabase($app)
+    protected function setUpDatabase(Application $app)
     {
         \Artisan::call('migrate', ['--force' => true]);
     }

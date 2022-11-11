@@ -17,16 +17,16 @@ use App\Containers\MarketPalace\Address\Tests\TestCase;
 class CountryTest extends TestCase
 {
     /** @var  Country */
-    protected $usa;
+    protected Country $usa;
 
     /** @var  Country */
-    protected $uk;
+    protected Country $uk;
 
     /** @var  Country */
-    protected $romania;
+    protected Country $romania;
 
     /** @var  Country */
-    protected $germany;
+    protected Country $germany;
 
     protected function setUp(): void
     {

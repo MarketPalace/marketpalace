@@ -16,6 +16,7 @@ use App\Containers\MarketPalace\Address\Models\Province;
 use App\Containers\MarketPalace\Address\Data\Seeders\Countries;
 use App\Containers\MarketPalace\Address\Data\Seeders\StatesOfGermany;
 use App\Containers\MarketPalace\Address\Tests\TestCase;
+use Illuminate\Foundation\Application;
 
 class GermanyTest extends TestCase
 {
@@ -63,9 +64,9 @@ class GermanyTest extends TestCase
         $this->assertContains('Thüringen', $names);
     }
 
-    protected function setUpDatabase($application)
+    protected function setUpDatabase(Application $app)
     {
-        parent::setUpDatabase($application);
+        parent::setUpDatabase($app);
 
         $this->artisan('db:seed', ['--class' => Countries::class]);
         $this->artisan('db:seed', ['--class' => StatesOfGermany::class]);

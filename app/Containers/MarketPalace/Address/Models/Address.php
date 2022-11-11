@@ -28,9 +28,26 @@ use App\Ship\Utils\CastsEnums;
  * @property string|null $postalcode     Max 12 characters
  * @property string|null $city
  * @property string $address
- *
  * @property-read Country $country
  * @property-read null|Province $province
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @method static \App\Containers\MarketPalace\Address\Data\Factories\AddressFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Address newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Address query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Address whereAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address whereCountryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address wherePostalcode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address whereProvinceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Address whereUpdatedAt($value)
  */
 class Address extends ParentModel implements AddressContract
 {
