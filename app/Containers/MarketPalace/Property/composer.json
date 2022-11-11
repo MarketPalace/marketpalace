@@ -1,0 +1,9 @@
+{
+    "name": "marketpalace/property",
+    "description": "Property Container for MarketPalace.",
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^9.3",
+        "cviebrock/eloquent-sluggable": "^9.0"
+    }
+}
