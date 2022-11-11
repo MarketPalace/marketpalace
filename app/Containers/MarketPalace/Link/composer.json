@@ -1,8 +1,9 @@
 {
-    "name": "apiato/link",
-    "description": "Link Container for apiato.",
+    "name": "marketpalace/link",
+    "description": "Link Container for MarketPalace.",
     "require": {
         "php": "^8.1",
+        "laravel/framework": "^9.3",
         "cviebrock/eloquent-sluggable": "^9.0"
     },
     "autoload": {
