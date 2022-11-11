@@ -1,6 +1,7 @@
 {
-    "name": "apiato/address",
-    "description": "Address Container for apiato.",
+    "name": "marketpalace/address",
+    "description": "Address Container for MarketPalace.",
     "require": {
+        "php": "^8.1"
     }
 }
