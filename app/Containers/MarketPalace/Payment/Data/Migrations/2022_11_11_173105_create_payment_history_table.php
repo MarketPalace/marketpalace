@@ -10,10 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('payment_history', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('payment_id');
+            $table->unsignedBigInteger('payment_id');
             $table->string('old_status', 35)->nullable();
             $table->string('new_status', 35);
             $table->string('message')->nullable();
@@ -29,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('payment_history');
     }
 };
