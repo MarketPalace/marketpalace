@@ -1,0 +1,8 @@
+{
+    "name": "marketpalace/shipment",
+    "description": "Shipment Container for MarketPalace.",
+    "require": {
+        "php": "^8.1",
+        "konekt/laravel-migration-compatibility": "^1.5"
+    }
+}
