@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Containers\MarketPalace\Product\Enums\ProductStateProxy;
 
 return new class extends Migration {
     /**
