@@ -10,12 +10,11 @@
 
 namespace App\Containers\MarketPalace\Customer\Tests\Unit;
 
-use App\Containers\MarketPalace\Customer\Tests\TestCase;
-
 use App\Containers\MarketPalace\Customer\Contracts\CustomerType as CustomerTypeContract;
-use App\Containers\MarketPalace\Customer\Models\CustomerProxy;
 use App\Containers\MarketPalace\Customer\Enums\CustomerType;
 use App\Containers\MarketPalace\Customer\Enums\CustomerTypeProxy;
+use App\Containers\MarketPalace\Customer\Models\CustomerProxy;
+use App\Containers\MarketPalace\Customer\Tests\TestCase;
 use App\Ship\Utils\Enum;
 
 class CustomerTypeTest extends TestCase
