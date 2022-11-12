@@ -60,7 +60,7 @@ class Customer extends ParentModel implements CustomerContract
     ];
 
     protected $enums = [
-        'type' => CustomerType::class,
+        'type' => 'CustomerTypeProxy@enumClass',
     ];
 
     protected $fillable = [];
