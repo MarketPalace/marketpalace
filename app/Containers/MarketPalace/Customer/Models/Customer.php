@@ -10,19 +10,22 @@
 
 namespace App\Containers\MarketPalace\Customer\Models;
 
-use App\Containers\MarketPalace\Customer\Contracts\CustomerType;
-use Carbon\Carbon;
-use App\Ship\Parents\Models\Model as ParentModel;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Containers\MarketPalace\Address\Models\Address;
+use App\Containers\MarketPalace\Address\Models\AddressProxy;
 use App\Containers\MarketPalace\Address\Models\Organization;
+use App\Containers\MarketPalace\Address\Models\OrganizationProxy;
 use App\Containers\MarketPalace\Address\Models\Person;
+use App\Containers\MarketPalace\Address\Models\PersonProxy;
 use App\Containers\MarketPalace\Customer\Contracts\Customer as CustomerContract;
+use App\Containers\MarketPalace\Customer\Contracts\CustomerType;
+use App\Containers\MarketPalace\Customer\Enums\CustomerTypeProxy;
 use App\Containers\MarketPalace\Customer\Events\CustomerTypeWasChanged;
 use App\Containers\MarketPalace\Customer\Events\CustomerWasCreated;
 use App\Containers\MarketPalace\Customer\Events\CustomerWasUpdated;
+use App\Ship\Parents\Models\Model as ParentModel;
 use App\Ship\Utils\CastsEnums;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int $id
@@ -54,9 +57,9 @@ class Customer extends ParentModel implements CustomerContract
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     protected $casts = [
-        'is_active'        => 'boolean',
+        'is_active' => 'boolean',
         'last_purchase_at' => 'datetime',
-        'ltv'              => 'float',
+        'ltv' => 'float',
     ];
 
     protected $enums = [
@@ -77,35 +80,6 @@ class Customer extends ParentModel implements CustomerContract
         'updated' => CustomerWasUpdated::class,
     ];
 
-    public function getName(): string
-    {
-        if ($this->type->isOrganization()) {
-            return $this->company_name;
-        }
-
-        return sprintf('%s %s', $this->firstname, $this->lastname);
-    }
-
-    public function person(): BelongsTo
-    {
-        return $this->belongsTo(Person::modelClass());
-    }
-
-    public function organization(): BelongsTo
-    {
-        return $this->belongsTo(Organization::modelClass());
-    }
-
-    public function addresses(): BelongsToMany
-    {
-        return $this->belongsToMany(Address::modelClass(), 'customer_addresses');
-    }
-
-    protected function getNameAttribute()
-    {
-        return $this->getName();
-    }
-
     protected static function boot()
     {
         parent::boot();
@@ -115,11 +89,40 @@ class Customer extends ParentModel implements CustomerContract
                 event(
                     new CustomerTypeWasChanged(
                         $customer,
-                        CustomerType::create($customer->original['type']),
+                        CustomerTypeProxy::create($customer->original['type']),
                         $customer->original
                     )
                 );
             }
         });
+    }
+
+    public function person(): BelongsTo
+    {
+        return $this->belongsTo(PersonProxy::modelClass());
+    }
+
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(OrganizationProxy::modelClass());
+    }
+
+    public function addresses(): BelongsToMany
+    {
+        return $this->belongsToMany(AddressProxy::modelClass(), 'customer_addresses');
+    }
+
+    protected function getNameAttribute()
+    {
+        return $this->getName();
+    }
+
+    public function getName(): string
+    {
+        if ($this->type->isOrganization()) {
+            return $this->company_name;
+        }
+
+        return sprintf('%s %s', $this->firstname, $this->lastname);
     }
 }

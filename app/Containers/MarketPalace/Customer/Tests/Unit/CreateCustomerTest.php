@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Contains the CreateCustomerTest class.
  *
- * @copyright   Copyright (c) 2017 Aboozar Ghaffari
+ * @copyright   Copyright (c) 2022 Aboozar Ghaffari
  * @author      Aboozar Ghaffari
  * @license     MIT
  *
@@ -68,23 +68,23 @@ class CreateCustomerTest extends TestCase
     {
         $john = CustomerProxy::create([
             'type'      => CustomerType::INDIVIDUAL,
-            'firstname' => 'John',
-            'lastname'  => 'Doe'
+            'firstname' => 'Aboozar',
+            'lastname'  => 'Ghaffari'
         ]);
 
         $this->assertTrue($john->type->isIndividual());
-        $this->assertEquals('John', $john->firstname);
-        $this->assertEquals('Doe', $john->lastname);
+        $this->assertEquals('Aboozar', $john->firstname);
+        $this->assertEquals('Ghaffari', $john->lastname);
 
         $john = $john->fresh(); // still there?
 
-        $this->assertEquals('John', $john->firstname);
-        $this->assertEquals('Doe', $john->lastname);
+        $this->assertEquals('Aboozar', $john->firstname);
+        $this->assertEquals('Ghaffari', $john->lastname);
 
         $john = CustomerProxy::find($john->id); // I'm bastard to see if it's still there
 
-        $this->assertEquals('John', $john->firstname);
-        $this->assertEquals('Doe', $john->lastname);
+        $this->assertEquals('Aboozar', $john->firstname);
+        $this->assertEquals('Ghaffari', $john->lastname);
     }
 
     /**
@@ -92,14 +92,14 @@ class CreateCustomerTest extends TestCase
      */
     public function org_customer_can_be_created()
     {
-        $acme = CustomerProxy::create([
+        $mp = CustomerProxy::create([
             'type'         => CustomerType::ORGANIZATION,
-            'company_name' => 'Acme Inc.',
+            'company_name' => 'Market Palace Inc.',
             'tax_nr'       => '19995521'
         ]);
 
-        $this->assertEquals('Acme Inc.', $acme->company_name);
-        $this->assertEquals('19995521', $acme->tax_nr);
+        $this->assertEquals('Market Palace Inc.', $mp->company_name);
+        $this->assertEquals('19995521', $mp->tax_nr);
     }
 
     /** @test */
@@ -121,15 +121,15 @@ class CreateCustomerTest extends TestCase
     {
         Event::fake();
 
-        $acme = CustomerProxy::create([
+        $mp = CustomerProxy::create([
             'type'         => CustomerType::ORGANIZATION,
-            'company_name' => 'Acme Inc.',
+            'company_name' => 'Market Palace Inc.',
             'tax_nr'       => '19995521'
         ]);
 
-        Event::assertDispatched(CustomerWasCreated::class, function ($event) use ($acme) {
-            return $event->getCustomer()->id   == $acme->id
-                && $event->getCustomer()->name == $acme->name;
+        Event::assertDispatched(CustomerWasCreated::class, function ($event) use ($mp) {
+            return $event->getCustomer()->id   == $mp->id
+                && $event->getCustomer()->name == $mp->name;
         });
     }
 
@@ -137,10 +137,10 @@ class CreateCustomerTest extends TestCase
     public function timezone_can_be_set()
     {
         $bamakan = Customer::create([
-            'timezone' => 'Africa/Bamako',
+            'timezone' => 'Asia/Tehran',
         ])->fresh();
 
-        $this->assertEquals('Africa/Bamako', $bamakan->timezone);
+        $this->assertEquals('Asia/Tehran', $bamakan->timezone);
     }
 
     /** @test */
