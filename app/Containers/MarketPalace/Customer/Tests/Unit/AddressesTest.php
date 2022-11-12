@@ -51,7 +51,7 @@ class AddressesTest extends TestCase
 
         $customer = Customer::create([
             'type'         => CustomerType::ORGANIZATION,
-            'company_name' => 'Market Palace Inc.'
+            'company_name' => 'Market Palace` Inc.'
         ]);
 
         $customer->addresses()->save($billing);
