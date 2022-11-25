@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('property_values', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('property_id')->unsigned();
+            $table->unsignedBigInteger('property_id');
             $table->string('value');
             $table->string('title');
             $table->integer('priority')->nullable();

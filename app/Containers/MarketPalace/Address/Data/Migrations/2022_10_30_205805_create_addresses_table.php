@@ -12,7 +12,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('addresses', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id('id');
+
             $table->enum('type', AddressTypeProxy::values())->nullable()->default(AddressTypeProxy::defaultValue());
             $table->string('name');
             $table->char('country_id', 2);

@@ -49,7 +49,7 @@ class Taxon extends ParentModel implements TaxonContract
         string $slug,
         ?string $parentSlug = null
     ): ?TaxonContract {
-        $taxonomyClass = Taxonomy::modelClass();
+        $taxonomyClass = TaxonomyProxy::modelClass();
         $taxonomyTableName = (new $taxonomyClass())->getTable();
         $taxonTableName = (new static())->getTable();
         $query = static::query()
@@ -131,7 +131,7 @@ class Taxon extends ParentModel implements TaxonContract
 
     public function taxonomy(): BelongsTo
     {
-        return $this->belongsTo(Taxonomy::modelClass(), 'taxonomy_id');
+        return $this->belongsTo(TaxonomyProxy::modelClass(), 'taxonomy_id');
     }
 
     public function parent(): BelongsTo

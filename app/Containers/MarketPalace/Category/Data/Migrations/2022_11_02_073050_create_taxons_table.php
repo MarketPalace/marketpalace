@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('taxons', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('taxonomy_id')->unsigned();
-            $table->integer('parent_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('taxonomy_id');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->integer('priority')->nullable();
             $table->string('name');
             $table->string('slug')->nullable();

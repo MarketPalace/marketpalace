@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('billpayers', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('address_id')->unsigned();
+            $table->unsignedBigInteger('address_id');
             $table->string('email')->nullable();
             $table->string('phone', 22)->nullable();
             $table->string('firstname')->nullable()->comment('First name');

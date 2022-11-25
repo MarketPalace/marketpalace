@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('model_taxons', function (Blueprint $table) {
-            $table->integer('taxon_id')->unsigned();
+            $table->unsignedBigInteger('taxon_id');
             $table->morphs('model');
             $table->timestamps();
 

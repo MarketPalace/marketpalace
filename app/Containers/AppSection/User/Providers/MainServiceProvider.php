@@ -3,6 +3,10 @@
 namespace App\Containers\AppSection\User\Providers;
 
 use App\Ship\Parents\Providers\MainServiceProvider as ParentMainServiceProvider;
+use App\Containers\AppSection\User\Models\Invitation;
+use App\Containers\AppSection\User\Models\Profile;
+use App\Containers\AppSection\User\Models\User;
+use App\Containers\AppSection\User\Enums\UserType;
 
 /**
  * Class MainServiceProvider.
@@ -11,6 +15,18 @@ use App\Ship\Parents\Providers\MainServiceProvider as ParentMainServiceProvider;
  */
 class MainServiceProvider extends ParentMainServiceProvider
 {
+    /** @var array */
+    protected array $models = [
+        User::class,
+        Profile::class,
+        Invitation::class,
+    ];
+
+    /** @var array */
+    protected array $enums = [
+        UserType::class
+    ];
+
     /**
      * Container Service Providers.
      */
