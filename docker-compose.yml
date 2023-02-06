@@ -1,0 +1,50 @@
+version: "3.8"
+services:
+
+    app:
+        build:
+            args:
+                user: MP
+                uid: 1000
+            context: ./
+            dockerfile: Dockerfile
+        image: marketpalace
+        container_name: market-palace-app
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        networks:
+            - market-palace-net
+
+    db:
+        image: mysql:latest
+        container_name: market-palace-db
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+            SERVICE_TAGS: dev
+            SERVICE_NAME: market-palace-mysql
+        volumes:
+            - ./docker/mysql:/docker-entrypoint-initdb.d
+        networks:
+            - market-palace-net
+
+    webserver:
+        image: nginx:alpine
+        container_name: market-palace-nginx
+        restart: unless-stopped
+        ports:
+            - 8000:80
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx:/etc/nginx/conf.d/
+        networks:
+            - market-palace-net
+
+networks:
+    market-palace-net:
+        driver: bridge
